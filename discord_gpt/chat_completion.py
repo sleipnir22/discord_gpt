@@ -1,4 +1,11 @@
+from enum import Enum
+
 from pydantic.main import BaseModel
+
+
+class GptModel(Enum):
+    GPT_3_5_TURBO = 'gpt-3.5-turbo'
+    GPT_3_5_TURBO_0301 = 'gpt-3.5-turbo-0301'
 
 
 class Choice(BaseModel):
@@ -23,3 +30,20 @@ class ChatCompletionResponse(BaseModel):
     usage: Usage
 
 
+class Message(BaseModel):
+    role: str
+    content: str
+    name: str | None
+
+
+class ChatCompletionRequest(BaseModel):
+    messages: list[Message]
+    model: GptModel
+    suffix: str | None = None
+    max_tokens: str | None = 1
+    temperature: str | None = 1
+    top_p: str | None = 1
+    n: int | None = 1
+    stream: bool = False
+    logprobs: int | None = None
+    echo: bool = False
